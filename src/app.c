@@ -46,6 +46,7 @@ bool init() {
 
 	cam_init(&cam);
 	init_objects(objects, &obj_count);
+	printf("Initialized %d objects\n", obj_count);
 	init_grid(&grid);
 
 	return true;
@@ -82,6 +83,9 @@ void run() {
 							break;
 						case SDLK_r:
 							// reset everything somehow
+							cam_init(&cam);
+							init_objects(objects, &obj_count);
+							init_grid(&grid);
 							break;
 						default:
 							break;
@@ -89,21 +93,30 @@ void run() {
 				default:
 					break;
 			}
-			// handle_cam_event(&cam, &ev, winW, winH);
+			handle_cam_event(&cam, &ev);
 		}
 
 		if (!paused) {
 			// update_scene();
 		}
 
-		// render_scene(&cam);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		render_scene(&cam);
 
-		glLoadIdentity();
-		apply_cam_view(&cam);
-
-		render_grid(&grid);
 		SDL_GL_SwapWindow(win);
+	}
+}
+
+void render_scene(Camera *cam) {
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glLoadIdentity();
+
+	apply_cam_view(cam);
+
+	render_grid(&grid);
+
+	for (int i = 0; i < obj_count; i++) {
+		draw_object(&objects[i]);
 	}
 }
 

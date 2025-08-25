@@ -19,6 +19,6 @@ typedef struct {
 void cam_init(Camera* cam);
 
 // handle given event with camera
-void handle_cam_event(Camera* cam, SDL_Event* ev, int winW, int winH);
+void handle_cam_event(Camera* cam, SDL_Event* ev);
 
 void apply_cam_view(Camera *cam);

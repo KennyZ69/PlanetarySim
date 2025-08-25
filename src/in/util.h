@@ -21,5 +21,5 @@ inline Vec3D vec3d_add(Vec3D a, Vec3D b) {
 }
 
 typedef struct {
-	u8 r, g, b, a;
+	u8 r, g, b;
 } Color;

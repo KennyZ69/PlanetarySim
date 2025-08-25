@@ -46,5 +46,8 @@ void render_grid(Grid *grid) {
 	}
 
 	glEnd();
-	glPopMatrix();
 }
+
+// void update_grid(Grid *grid, Object *objects, int obj_count) {
+//
+// }
