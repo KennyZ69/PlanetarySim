@@ -3,16 +3,14 @@
 #include <string.h>
 #include "in/object.h"
 
-Object objects[MAX_OBJECTS];
-int obj_count = 0;
 
-void clear_objects() {
-	obj_count = 0;
-	memset(objects, 0, sizeof(objects));
+void clear_objects(Object objects[], int *obj_count) {
+	*obj_count = 0;
+	memset(objects, 0, sizeof(Object) * MAX_OBJECTS);
 }
 
-void init_objects() {
-	clear_objects();
+void init_objects(Object objects[], int *obj_count) {
+	clear_objects(objects, obj_count);
 }
 
 void add_object(const char *name, Vec3D pos, Vec3D vel, double mass, float radius, Color color) {

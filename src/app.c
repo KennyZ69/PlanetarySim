@@ -1,7 +1,7 @@
 /* app.c */
 
 #include "in/app.h"
-#include "in/util.h"
+#include "in/camera.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_keycode.h>
@@ -11,7 +11,13 @@
 
 static SDL_Window* win = NULL;
 static SDL_GLContext *ctx = NULL;
+
 Camera cam;
+
+Grid grid;
+
+Object objects[MAX_OBJECTS];
+int obj_count = 0;
 
 bool init() {
 	if (SDL_Init(SDL_INIT_VIDEO) != 0) {
@@ -38,8 +44,9 @@ bool init() {
 
 	gl_setup();
 
-	// cam_init(&cam);
-	// init_objects();
+	cam_init(&cam);
+	init_objects(objects, &obj_count);
+	init_grid(&grid);
 
 	return true;
 }
@@ -74,7 +81,7 @@ void run() {
 							paused = !paused;
 							break;
 						case SDLK_r:
-						// init_objects();
+							// reset everything somehow
 							break;
 						default:
 							break;
@@ -90,6 +97,12 @@ void run() {
 		}
 
 		// render_scene(&cam);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		glLoadIdentity();
+		apply_cam_view(&cam);
+
+		render_grid(&grid);
 		SDL_GL_SwapWindow(win);
 	}
 }

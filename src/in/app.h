@@ -4,6 +4,7 @@
 
 #include "object.h"
 #include "camera.h"
+#include "grid.h"
 
 bool init();
 
