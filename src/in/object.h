@@ -30,4 +30,4 @@ void leapfrog_step(Object objects[], int obj_count, float dt);
 // Vec3D *compute_gravity(Object objects[], int obj_count);
 void compute_gravity(Object objects[], int obj_count, Vec3D forces[]); // pass in preallocated forces array
 
-void update_positions(Object objects[], int obj_count);
+void initial_velocity(Object *obj, Object *central);

@@ -36,20 +36,23 @@ void init_objects(Object objects[], int *obj_count) {
 		.radius = 1.05f,
 		.color = {0, 0, 255} // blue
 	};
+	initial_velocity(&earth, &sun);
 
-	Vec3D r = vec3d_sub(earth.pos, sun.pos);
+	
+	objects[(*obj_count)++] = earth;
+}
+
+void initial_velocity(Object *obj, Object *central) {
+	Vec3D r = vec3d_sub(obj->pos, central->pos);
 	float dist = sqrt(r.x*r.x + r.z*r.z);
 
-	// compute circular orbit speed
-	float vel = sqrt(G * sun.mass / dist);
+	float speed = sqrt(G * central->mass / dist);
 
 	// perpendicular direction in X-Z plane
-	Vec3D dir = { -r.z / dist, 0, r.x / dist };
+	Vec3D vel = { -r.z / dist, 0, r.x / dist };
 
 	// set initial velocity
-	earth.vel = vec3d_scale(dir, vel);
-
-	objects[(*obj_count)++] = earth;
+	obj->vel = vec3d_scale(vel, speed);
 }
 
 void draw_object(const Object *obj) {
