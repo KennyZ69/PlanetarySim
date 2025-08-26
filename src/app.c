@@ -2,6 +2,7 @@
 
 #include "in/app.h"
 #include "in/camera.h"
+#include "in/object.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_keycode.h>
@@ -97,7 +98,7 @@ void run() {
 		}
 
 		if (!paused) {
-			// update_scene();
+			update_scene();
 		}
 
 		render_scene(&cam);
@@ -115,9 +116,14 @@ void render_scene(Camera *cam) {
 
 	render_grid(&grid);
 
+	printf("Rendering %d objects\n", obj_count);
 	for (int i = 0; i < obj_count; i++) {
 		draw_object(&objects[i]);
 	}
+}
+
+void update_scene() {
+	leapfrog_step(objects, obj_count, DT);
 }
 
 void gl_setup(){

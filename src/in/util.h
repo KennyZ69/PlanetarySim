@@ -20,6 +20,17 @@ inline Vec3D vec3d_add(Vec3D a, Vec3D b) {
 	return (Vec3D){a.x + b.x, a.y + b.y, a.z + b.z};
 }
 
+inline Vec3D vec3d_sub(Vec3D a, Vec3D b) {
+	return (Vec3D){a.x - b.x, a.y - b.y, a.z - b.z};
+}
+
+inline Vec3D vec3d_scale(Vec3D v, float s) {
+	return (Vec3D){v.x * s, v.y * s, v.z * s};
+}
+
 typedef struct {
 	u8 r, g, b;
 } Color;
+
+#define G (4.0f * M_PI * M_PI) // scaled down gravitational constant
+#define DT 0.001f // time step
