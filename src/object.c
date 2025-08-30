@@ -17,29 +17,52 @@ void clear_objects(Object objects[], int *obj_count) {
 void init_objects(Object objects[], int *obj_count) {
 	clear_objects(objects, obj_count);
 
-	Object sun = (Object){
-		.name = "Sun",
-		.pos = {0.0f, 1.0f, 0.0f},
-		.vel = {0.0f, 0.0f, 0.0f},
-		.mass = 1.0f, // mass of the sun
-		.radius = 2.2f,
-		.color = {255, 255, 0} // yellow
+	*obj_count = 4;
+
+	// Sun
+	objects[0] = (Object){
+	.name = "Sun",
+	.pos = {0, 0, 0},
+	.vel = {0, 0, 0},
+	.mass = 1.0f, // in solar masses
+	.radius = 10.0f, // exaggerated size for visibility
+	.color = {255, 255, 0}
 	};
 
-	objects[(*obj_count)++] = sun;
-
-	Object earth = (Object){
-		.name = "Earth",
-		.pos = {3.0f, 2.0f, 0.0f},
-		// .vel = {0.0f, 0.0f, 2 * M_PI}, // approx orbital velocity of the earth
-		.mass = 3e-6f, // mass of the earth
-		.radius = 1.05f,
-		.color = {0, 0, 255} // blue
+	// Mercury
+	objects[1] = (Object){
+	.name = "Mercury",
+	.pos = {14.8f, 0, 0},
+	.vel = {0, 0, 47.4e3f}, // m/s, will be rescaled later
+	.mass = 0.33e24f / MASS_SCALE,
+	.radius = 3.0f,
+	.color = {153, 153, 153}
 	};
-	initial_velocity(&earth, &sun);
 
-	
-	objects[(*obj_count)++] = earth;
+	// Venus
+	objects[2] = (Object){
+	.name = "Venus",
+	.pos = {21.80f, 0, 0},
+	.vel = {0, 0, 35.0e3f},
+	.mass = 4.87e24f / MASS_SCALE,
+	.radius = 3.4f,
+	.color = {255, 204, 153}
+	};
+
+	// Earth
+	objects[3] = (Object){
+	.name = "Earth",
+	.pos = {38.0f, 0, 0},
+	.vel = {0, 0, 29.8e3f},
+	.mass = 5.97e24f / MASS_SCALE,
+	.radius = 4.0f,
+	.color = {0, 0, 255}
+	};
+
+	// Fix velocities with orbital speed
+	for (int i = 1; i < *obj_count; i++) {
+		initial_velocity(&objects[i], &objects[0]);
+	}
 }
 
 void initial_velocity(Object *obj, Object *central) {
@@ -125,15 +148,7 @@ void leapfrog_step(Object *objects, int obj_count, float dt) {
 			objects[i].vel.z * dt,
 		});
 	}
-	// for (int i = 0; i < obj_count; i++) {
-		// update position by full step
-		// objects[i].pos = vec3d_add(objects[i].pos, (Vec3D){
-		// 	objects[i].vel.x * dt,
-		// 	objects[i].vel.y * dt,
-		// 	objects[i].vel.z * dt,
-		// });
-	// }
-
+	
 	// recompute acceleration at new position
 	compute_gravity(objects, obj_count, forces);
 

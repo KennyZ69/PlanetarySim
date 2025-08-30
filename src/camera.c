@@ -6,12 +6,13 @@
 #include <SDL2/SDL_mouse.h>
 
 void cam_init(Camera *cam) {
-	cam->vertical = 0.75f; // slightly above the horizon
-	cam->horizontal = 3.14f / 4.0f; // 45 degrees in radians
-	cam->dist = 40.0f;
-	cam->zoom = 0.75f;
+	cam->vertical = 0.7f; // slightly above the horizon
+	// cam->horizontal = 3.14f / 2.0f; // 45 degrees in radians
+	cam->horizontal = 0;
+	cam->dist = 120.0f;
+	cam->zoom = 0.95f;
 	cam->rot = 0.005f;
-	cam->pan = 0.10f;
+	cam->pan = 0.08;
 	cam->rotating = false;
 	cam->panning = false;
 	cam->last_x = 0;

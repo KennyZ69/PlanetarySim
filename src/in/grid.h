@@ -6,8 +6,8 @@
 #include "util.h"
 #include "object.h"
 
-#define GRID_SPACING 1.0f
-#define GRID_SIZE 50
+#define GRID_SPACING 2.0f
+#define GRID_SIZE 300
 
 typedef struct {
 	Vec3D vertices[GRID_SIZE][GRID_SIZE];

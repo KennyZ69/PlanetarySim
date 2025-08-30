@@ -33,4 +33,5 @@ typedef struct {
 } Color;
 
 #define G (4.0f * M_PI * M_PI) // scaled down gravitational constant
-#define DT 0.001f // time step
+// I want the delta to be  a day per frame
+#define DT 1.0f / 365.25f
